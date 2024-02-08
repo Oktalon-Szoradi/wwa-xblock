@@ -1,0 +1,69 @@
+/* CSS for WWACodingEnvXBlock */
+.wwacodingenvxblock_block .count {
+  font-weight: bold;
+}
+
+.wwacodingenvxblock_block .demo {
+  cursor: pointer;
+}
+
+#thecodingarea {
+  display: block;
+  margin: 16px;
+  border: none;
+  border-radius: 4px;
+  box-shadow: inset 0 0 0 1px hsla(0, 0%, 0%, 0.4),
+    inset 0 0 0 2px hsla(0, 0%, 100%, 0.25);
+  background-color: #222;
+  padding: 8px;
+  line-height: 1.5;
+  color: white;
+  font-family: monospace;
+}
+
+#thecodingarea:focus-visible {
+  outline: none;
+  box-shadow: inset 0 0 0 1px hsla(0, 0%, 0%, 0.4),
+    inset 0 0 0 2px hsla(0, 0%, 100%, 0.25), 0 0 4px 1px hsl(200, 100%, 50%);
+}
+
+.button-run {
+  margin: 8px;
+  border: none;
+  border-radius: 4px;
+  box-shadow: inset 0 0 0 1px hsla(0, 0%, 0%, 0.4),
+    inset 0 0 0 2px hsla(0, 0%, 100%, 0.25);
+  background: linear-gradient(to bottom,
+      hsl(120, 100%, 45%),
+      hsl(120, 100%, 25%),
+      hsl(120, 100%, 30%));
+  cursor: pointer;
+  padding: 8px 16px;
+  text-align: center;
+  text-decoration: none;
+  text-shadow: 0 1px 1px hsla(0, 0%, 0%, 0.25);
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.button-run:hover {
+  box-shadow: inset 0 0 0 1px hsla(0, 0%, 0%, 0.4),
+    inset 0 0 0 2px hsla(0, 0%, 100%, 0.25), 0 0 4px 1px hsl(120, 100%, 50%);
+  background: linear-gradient(to bottom,
+      hsl(120, 100%, 55%),
+      hsl(120, 100%, 35%),
+      hsl(120, 100%, 40%));
+}
+
+.button-run:active {
+  background: linear-gradient(to bottom,
+      hsl(120, 100%, 35%),
+      hsl(120, 100%, 15%),
+      hsl(120, 100%, 20%));
+}
+
+.error {
+  color: red !important;
+  font-family: monospace;
+}

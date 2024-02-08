@@ -1,0 +1,24 @@
+talon@talon-swiftsf314511:~$ cd ./Documents/_Diplomarbeit/Tutor_\(Open_edX\)/xblock
+talon@talon-swiftsf314511:~/Documents/_Diplomarbeit/Tutor_(Open_edX)/xblock$ source venv/bin/activate
+(venv) talon@talon-swiftsf314511:~/Documents/_Diplomarbeit/Tutor_(Open_edX)/xblock$ python3 xblock-sdk/manage.py runserver
+Performing system checks...
+
+System check identified no issues (0 silenced).
+December 21, 2023 - 06:16:43
+Django version 3.2.23, using settings 'workbench.settings'
+Starting development server at http://127.0.0.1:8000/
+Quit the server with CONTROL-C.
+/home/talon/Documents/_Diplomarbeit/Tutor_(Open_edX)/xblock/venv/lib/python3.11/site-packages/xblock/runtime.py:573: FutureWarning: IdGenerator will be required in the future in order to support XBlockAsides
+  warnings.warn("IdGenerator will be required in the future in order to support XBlockAsides", FutureWarning)
+^C(venv) talon@talon-swiftsf314511:~/Documents/_Diplomarbeit/Tutor_(Open_edX)/xblock$ ^C
+(venv) talon@talon-swiftsf314511:~/Documents/_Diplomarbeit/Tutor_(Open_edX)/xblock$
+
+##########
+
+https://edx.readthedocs.io/projects/xblock-tutorial/en/latest/getting_started/setup_sdk.html
+
+source venv/bin/activate
+
+https://edx.readthedocs.io/projects/xblock-tutorial/en/latest/getting_started/create_first_xblock.html
+
+python xblock-sdk/manage.py runserver
