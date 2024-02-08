@@ -21,7 +21,8 @@ There are also other folders:
 - xblock-sdk
 
 Check the XBlock Documentation for more information on those.  
-`venv` and `xblock-sdk` contain `.gitignore` files, so they are not included in the repository.
+`venv` and `xblock-sdk` contain `.gitignore` files, so they are not included in the repository.  
+`var` seems to just contain logs or something, I've decided to also gitignore it.
 
 Also check out `HowToStartThing.txt`...
 
