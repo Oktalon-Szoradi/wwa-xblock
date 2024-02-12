@@ -13,21 +13,12 @@ https://github.com/Oktalon-Szoradi/csharp-exec-server
 ## XBlock Documentation
 https://edx.readthedocs.io/projects/xblock-tutorial/en/latest/getting_started/index.html
 
-## Information!
-The work I've done is in `wwacodingenvxblock/wwacodingenvxblock/static/`  
-There are also other folders:
-- var
-- venv
-- xblock-sdk
-
-Check the XBlock Documentation for more information on those.  
-`venv` and `xblock-sdk` contain `.gitignore` files, so they are not included in the repository.  
-`var` seems to just contain logs or something, I've decided to also gitignore it.
-
-Also check out `HowToStartThing.txt`...
+## Info
+`wwacodingenvxblock/wwacodingenvxblock/static/` contains
+the HTML, CSS, and JS.  
 
 ## How to Start
-That lil text file is meh now. I think I finally figured out how to do it now:  
+That lil text file (`HowToStartThing.txt`) is meh now. I think I finally figured out how to do it now:  
 (You should be on a Linux distro!)  
 (Assuming you have all the dependencies, like Python 3.8)
 
