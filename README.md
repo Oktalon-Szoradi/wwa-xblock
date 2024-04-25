@@ -14,7 +14,7 @@ https://github.com/Oktalon-Szoradi/csharp-exec-server
 https://edx.readthedocs.io/projects/xblock-tutorial/en/latest/getting_started/index.html
 
 ## Info
-`wwacodingenvxblock/wwacodingenvxblock/static/` contains
+`wwacodingenvxblock/static/` contains
 the HTML, CSS, and JS.  
 
 ## How to Start
