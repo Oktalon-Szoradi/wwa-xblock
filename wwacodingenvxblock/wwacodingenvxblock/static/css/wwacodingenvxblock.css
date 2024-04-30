@@ -46,6 +46,10 @@
   border-right: 1px solid hsla(0, 0%, 100%, 0.25);
 }
 
+span.keyword {
+  color: #569cd6;
+}
+
 .button-run {
   margin: 8px;
   border: none;

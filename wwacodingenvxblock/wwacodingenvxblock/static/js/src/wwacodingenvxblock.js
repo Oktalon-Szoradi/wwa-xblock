@@ -19,6 +19,173 @@ function WWACodingEnvXBlock (runtime, element) {
     $('#lines').text(lineNumbers)
   }
 
+  function doSyntaxHighlighting () {
+    const KEYWORDS = [
+      'abstract',
+      'as',
+      'base',
+      'bool',
+      'break',
+      'byte',
+      'case',
+      'catch',
+      'char',
+      'checked',
+      'class',
+      'const',
+      'continue',
+      'decimal',
+      'default',
+      'delegate',
+      'do',
+      'double',
+      'else',
+      'enum',
+      'event',
+      'explicit',
+      'extern',
+      'false',
+      'finally',
+      'fixed',
+      'float',
+      'for',
+      'foreach',
+      'goto',
+      'if',
+      'implicit',
+      'in',
+      'int',
+      'interface',
+      'internal',
+      'is',
+      'lock',
+      'long',
+      'namespace',
+      'new',
+      'null',
+      'object',
+      'operator',
+      'out',
+      'override',
+      'params',
+      'private',
+      'protected',
+      'public',
+      'readonly',
+      'ref',
+      'return',
+      'sbyte',
+      'sealed',
+      'short',
+      'sizeof',
+      'stackalloc',
+      'static',
+      'string',
+      'struct',
+      'switch',
+      'this',
+      'throw',
+      'true',
+      'try',
+      'typeof',
+      'uint',
+      'ulong',
+      'unchecked',
+      'unsafe',
+      'ushort',
+      'using',
+      'virtual',
+      'void',
+      'volatile',
+      'while'
+    ]
+    const CONTEXTUAL_KEYWORDS = [
+      'add',
+      'and',
+      'alias',
+      'ascending',
+      'args',
+      'async',
+      'await',
+      'by',
+      'descending',
+      'dynamic',
+      'equals',
+      'file',
+      'from',
+      'get',
+      'global',
+      'group',
+      'init',
+      'into',
+      'join',
+      'let',
+      'managed',
+      'nameof',
+      'nint',
+      'not',
+      'notnull',
+      'nuint',
+      'on',
+      'or',
+      'orderby',
+      'partial',
+      'record',
+      'remove',
+      'required',
+      'scoped',
+      'select',
+      'set',
+      'unmanaged',
+      'value',
+      'var',
+      'when',
+      'where',
+      'with',
+      'yield'
+    ]
+    const elementToSyntaxHighlight = $('#thecodingarea')
+
+    // Go thru each div and syntax highlight it
+    elementToSyntaxHighlight.children().each(function (index, element) {
+      const text = element.textContent
+      let newText = text
+
+      // Highlight keywords
+      KEYWORDS.forEach(keyword => {
+        const regex = new RegExp(`\\b${keyword}\\b`, 'g')
+        newText = newText.replace(
+          regex,
+          `<span class="keyword">${keyword}</span>`
+        )
+      })
+
+      // Highlight contextual keywords
+      CONTEXTUAL_KEYWORDS.forEach(keyword => {
+        const regex = new RegExp(`\\b${keyword}\\b`, 'g')
+        newText = newText.replace(
+          regex,
+          `<span class="contextual-keyword">${keyword}</span>`
+        )
+      })
+
+      // Save the current selection
+      const sel = window.getSelection()
+      const range = sel.rangeCount > 0 ? sel.getRangeAt(0) : null
+
+      // Update the text of the element
+      if (newText !== text) {
+        element.innerHTML = newText
+      }
+
+      // Restore the selection
+      if (range) {
+        sel.removeAllRanges()
+        sel.addRange(range)
+      }
+    })
+  }
+
   const handlerUrl = runtime.handlerUrl(element, 'increment_count')
 
   $('.demo', element).click(function (eventObject) {
@@ -61,7 +228,9 @@ function WWACodingEnvXBlock (runtime, element) {
     })
   })
 
-  $('#thecodingarea', element).on('input', updateLineNumbers)
+  $('#thecodingarea', element).on('input', function () {
+    updateLineNumbers()
+  })
 
   // <div id="thecodingarea" contenteditable></div>
   $('#thecodingarea', element).on('keydown', function (e) {
@@ -80,6 +249,8 @@ function WWACodingEnvXBlock (runtime, element) {
       selection.addRange(range)
     }
 
+    // #region Unused
+
     // Shift+Tab should remove 2 preceding spaces from the current line
     // or the current selection
     if (e.shiftKey && e.keyCode === 9) {
@@ -88,39 +259,106 @@ function WWACodingEnvXBlock (runtime, element) {
       // ToDo
     }
 
-    // Enter should insert a newline and indent the next line if the current line is indented
-    /* if (e.keyCode === 13) {
-      e.preventDefault()
+    // // Backspace should remove 4 spaces if there are 4 spaces at the cursor
+    // if (e.keyCode === 8) {
+    //   const cursorPos = window.getSelection().getRangeAt(0).startOffset
+    //   const textBeforeCursor = this.textContent.substring(0, cursorPos)
+    //   console.log('textBeforeCursor:', textBeforeCursor)
+    //   console.log(textBeforeCursor.endsWith('    '))
+    //   if (textBeforeCursor.endsWith('\u00a0\u00a0\u00a0\u00a0')) {
+    //     e.preventDefault()
+    //     this.textContent =
+    //       textBeforeCursor.slice(0, -4) + this.textContent.substring(cursorPos)
+    //     const range = document.createRange()
+    //     const sel = window.getSelection()
+    //     range.setStart(this.childNodes[0], cursorPos - 4)
+    //     range.collapse(true)
+    //     sel.removeAllRanges()
+    //     sel.addRange(range)
+    //   }
+    // }
 
-      const selection = window.getSelection()
-      const range = selection.getRangeAt(0)
-      const nodeContent = range.startContainer.textContent
-      const currentLine = nodeContent
-        .slice(0, range.startOffset)
-        .split('\n')
-        .pop()
+    // // Pressing space should always insert a nbsp
+    // if (e.keyCode === 32) {
+    //   e.preventDefault()
+    //   const selection = window.getSelection()
+    //   const range = selection.getRangeAt(0)
+    //   const spaceNode = document.createTextNode('\u00a0')
+    //   range.insertNode(spaceNode)
 
-      // Count the leading spaces
-      const leadingSpaces = currentLine.match(/^(\s*)/)[0]
+    //   // Move the cursor
+    //   range.setStartAfter(spaceNode)
+    //   range.setEndAfter(spaceNode)
+    //   selection.removeAllRanges()
+    //   selection.addRange(range)
+    // }
 
-      // Create a new div with the same indentation
-      const newDiv = document.createElement('div')
-      newDiv.innerHTML = leadingSpaces.replace(/ /g, '&nbsp;')
+    // // Enter should insert a newline and indent the next line if the current line is indented
+    // if (e.keyCode === 13) {
+    //   e.preventDefault()
 
-      $('#thecodingarea').append(newDiv)
+    //   const selection = window.getSelection()
+    //   const range = selection.getRangeAt(0)
+    //   const nodeContent = range.startContainer.textContent
+    //   const currentLine = nodeContent
+    //     .slice(0, range.startOffset)
+    //     .split('\n')
+    //     .pop()
 
-      // Move the cursor to the end of the inserted div
-      range.setStart(newDiv, 1)
-      range.collapse(true)
-      selection.removeAllRanges()
-      selection.addRange(range)
+    //   // Split the text at the cursor position
+    //   const textBeforeCursor = nodeContent.slice(0, range.startOffset)
+    //   const textAfterCursor = nodeContent.slice(range.startOffset)
 
-      updateLineNumbers()
-    } */
+    //   // Count the leading spaces
+    //   const leadingSpaces = currentLine.match(/^(?:&nbsp;)*/)[0]
+    //   console.log('leadingSpaces.length:', leadingSpaces.length)
+
+    //   // Create a new div with the same indentation and the text after the cursor
+    //   const newDiv = document.createElement('div')
+    //   newDiv.innerHTML = leadingSpaces.replace(/ /g, '&nbsp;') + textAfterCursor
+    //   if (leadingSpaces.length === 0) {
+    //     newDiv.innerHTML = '<br>' + textAfterCursor
+    //   }
+
+    //   // Get the parent div of the current selection
+    //   let parentDiv = range.startContainer
+    //   while (
+    //     parentDiv.parentNode &&
+    //     parentDiv.parentNode.id !== 'thecodingarea'
+    //   ) {
+    //     parentDiv = parentDiv.parentNode
+    //   }
+
+    //   // Insert the new div after the parent div
+    //   if (parentDiv.nextSibling) {
+    //     parentDiv.parentNode.insertBefore(newDiv, parentDiv.nextSibling)
+    //   } else {
+    //     parentDiv.parentNode.appendChild(newDiv)
+    //   }
+
+    //   // Update the text in the current div to the text before the cursor
+    //   range.startContainer.textContent = textBeforeCursor
+
+    //   // Move the cursor to the end of the inserted div
+    //   range.setStart(newDiv.firstChild, leadingSpaces.length)
+    //   range.collapse(true)
+    //   selection.removeAllRanges()
+    //   selection.addRange(range)
+
+    //   updateLineNumbers()
+    // }
+
+    // #endregion
 
     // Entering ( or [ or { should automatically insert the closing character
     // and move the cursor inside the brackets
-    if (e.key === '(' || e.key === '[' || e.key === '{' || e.key === '"' || e.key === "'") {
+    if (
+      e.key === '(' ||
+      e.key === '[' ||
+      e.key === '{' ||
+      e.key === '"' ||
+      e.key === "'"
+    ) {
       e.preventDefault()
 
       const selection = window.getSelection()
@@ -161,12 +399,11 @@ function WWACodingEnvXBlock (runtime, element) {
       selection.removeAllRanges()
       selection.addRange(range)
     }
-
-    // Syntax highlighting
   })
 
   $(function ($) {
     /* Here's where you'd do things on page load. */
     updateLineNumbers()
+    doSyntaxHighlighting()
   })
 }
