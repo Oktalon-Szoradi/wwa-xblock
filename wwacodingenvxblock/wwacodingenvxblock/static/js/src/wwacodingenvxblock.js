@@ -89,7 +89,7 @@ function WWACodingEnvXBlock (runtime, element) {
     }
 
     // Enter should insert a newline and indent the next line if the current line is indented
-    if (e.keyCode === 13) {
+    /* if (e.keyCode === 13) {
       e.preventDefault()
 
       const selection = window.getSelection()
@@ -107,8 +107,7 @@ function WWACodingEnvXBlock (runtime, element) {
       const newDiv = document.createElement('div')
       newDiv.innerHTML = leadingSpaces.replace(/ /g, '&nbsp;')
 
-      // Insert the new div at the cursor position
-      range.insertNode(newDiv)
+      $('#thecodingarea').append(newDiv)
 
       // Move the cursor to the end of the inserted div
       range.setStart(newDiv, 1)
@@ -117,7 +116,7 @@ function WWACodingEnvXBlock (runtime, element) {
       selection.addRange(range)
 
       updateLineNumbers()
-    }
+    } */
 
     // Entering ( or [ or { should automatically insert the closing character
     // and move the cursor inside the brackets
