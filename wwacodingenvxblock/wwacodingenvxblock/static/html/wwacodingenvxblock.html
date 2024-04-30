@@ -3,7 +3,10 @@
     CodingAreaXBlock: count is now
     <span class="count">{self.count}</span> (click me to increment).
   </p>
-  <textarea id="thecodingarea" rows="10" cols="80"></textarea>
+  <div id="container">
+    <pre id="lines">1</pre>
+    <div id="thecodingarea" contenteditable></div>
+  </div>
   <button class="button-run">Run</button>
   <p>
     <b>Output:</b><br />

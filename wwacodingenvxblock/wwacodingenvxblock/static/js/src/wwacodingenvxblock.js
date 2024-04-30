@@ -7,6 +7,19 @@ function WWACodingEnvXBlock (runtime, element) {
     $('.count', element).text(result.count)
   }
 
+  function updateLineNumbers () {
+    let lineCount = $('#thecodingarea').children().length
+    // Node.TEXT_NODE = 3
+    if ($('#thecodingarea').contents().first()[0].nodeType === 3) {
+      lineCount += 1
+    }
+    let lineNumbers = ''
+    for (let i = 1; i <= lineCount; i++) {
+      lineNumbers += i + '\n'
+    }
+    $('#lines').text(lineNumbers)
+  }
+
   const handlerUrl = runtime.handlerUrl(element, 'increment_count')
 
   $('.demo', element).click(function (eventObject) {
@@ -60,7 +73,32 @@ function WWACodingEnvXBlock (runtime, element) {
     })
   })
 
+  $('#thecodingarea', element).on('input', updateLineNumbers)
+
+  // <div id="thecodingarea" contenteditable></div>
+  $('#thecodingarea', element).on('keydown', function (e) {
+    // Tab should insert 4 spaces
+    if (e.keyCode === 9) {
+      e.preventDefault()
+    }
+
+    // Shift+Tab should remove 2 preceding spaces from the current line
+    // or the current selection
+    if (e.shiftKey && e.keyCode === 9) {
+      e.preventDefault()
+      // ToDo
+    }
+
+    // Enter should insert a newline and indent the next line if the current line is indented
+    // Enter should also put closing brackets on its own new line
+
+    // Entering ( or [ or { should automatically insert the closing character
+
+    // Syntax highlighting
+  })
+
   $(function ($) {
     /* Here's where you'd do things on page load. */
+    updateLineNumbers()
   })
 }
