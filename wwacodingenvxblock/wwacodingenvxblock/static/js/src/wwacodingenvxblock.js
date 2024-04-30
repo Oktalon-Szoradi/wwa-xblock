@@ -8,11 +8,10 @@ function WWACodingEnvXBlock (runtime, element) {
   }
 
   function updateLineNumbers () {
-    let lineCount = $('#thecodingarea').children().length
-    // Node.TEXT_NODE = 3
-    if ($('#thecodingarea').contents().first()[0].nodeType === 3) {
-      lineCount += 1
-    }
+    const lineCount = $('#thecodingarea').children().length
+    // if ($('#thecodingarea').contents().first()[0].nodeType === 3) {
+    //   lineCount += 1
+    // }
     let lineNumbers = ''
     for (let i = 1; i <= lineCount; i++) {
       lineNumbers += i + '\n'
@@ -32,21 +31,10 @@ function WWACodingEnvXBlock (runtime, element) {
   })
 
   $('.button-run', element).click(function (eventObject) {
-    const code = $('#thecodingarea').val()
+    const code = $('#thecodingarea').text()
     const outputArea = $('.output')
     const errorArea = $('.error')
     const exitCodeArea = $('.exitCode')
-
-    /*
-    let output = '...'
-    try {
-      output = eval(code)
-    } catch (e) {
-      console.error(e)
-      outputarea.text(e)
-    }
-    outputarea.text(output)
-    */
 
     console.info('code:', code)
     console.info('stringified:', JSON.stringify({ user: 'Talon', code }))
@@ -80,19 +68,100 @@ function WWACodingEnvXBlock (runtime, element) {
     // Tab should insert 4 spaces
     if (e.keyCode === 9) {
       e.preventDefault()
+      const selection = window.getSelection()
+      const range = selection.getRangeAt(0)
+      const tabNode = document.createTextNode('\u00a0\u00a0\u00a0\u00a0')
+      range.insertNode(tabNode)
+
+      // Move the cursor
+      range.setStartAfter(tabNode)
+      range.setEndAfter(tabNode)
+      selection.removeAllRanges()
+      selection.addRange(range)
     }
 
     // Shift+Tab should remove 2 preceding spaces from the current line
     // or the current selection
     if (e.shiftKey && e.keyCode === 9) {
-      e.preventDefault()
+      // e.preventDefault()
+      console.log('Shift+Tab pressed')
       // ToDo
     }
 
     // Enter should insert a newline and indent the next line if the current line is indented
-    // Enter should also put closing brackets on its own new line
+    if (e.keyCode === 13) {
+      e.preventDefault()
+
+      const selection = window.getSelection()
+      const range = selection.getRangeAt(0)
+      const nodeContent = range.startContainer.textContent
+      const currentLine = nodeContent
+        .slice(0, range.startOffset)
+        .split('\n')
+        .pop()
+
+      // Count the leading spaces
+      const leadingSpaces = currentLine.match(/^(\s*)/)[0]
+
+      // Create a new div with the same indentation
+      const newDiv = document.createElement('div')
+      newDiv.innerHTML = leadingSpaces.replace(/ /g, '&nbsp;')
+
+      // Insert the new div at the cursor position
+      range.insertNode(newDiv)
+
+      // Move the cursor to the end of the inserted div
+      range.setStart(newDiv, 1)
+      range.collapse(true)
+      selection.removeAllRanges()
+      selection.addRange(range)
+
+      updateLineNumbers()
+    }
 
     // Entering ( or [ or { should automatically insert the closing character
+    // and move the cursor inside the brackets
+    if (e.key === '(' || e.key === '[' || e.key === '{' || e.key === '"' || e.key === "'") {
+      e.preventDefault()
+
+      const selection = window.getSelection()
+      const range = selection.getRangeAt(0)
+
+      // Determine the closing bracket
+      let closingBracket
+      switch (e.key) {
+        case '(':
+          closingBracket = ')'
+          break
+        case '[':
+          closingBracket = ']'
+          break
+        case '{':
+          closingBracket = '}'
+          break
+        case '"':
+          closingBracket = '"'
+          break
+        case "'":
+          closingBracket = "'"
+          break
+      }
+
+      // Create a document fragment to hold the opening bracket, cursor, and closing bracket
+      const fragment = document.createDocumentFragment()
+      fragment.appendChild(document.createTextNode(e.key))
+      const cursorNode = document.createTextNode(closingBracket)
+      fragment.appendChild(cursorNode)
+
+      // Insert the fragment at the cursor position
+      range.insertNode(fragment)
+
+      // Move the cursor inside the brackets
+      range.setStartBefore(cursorNode)
+      range.setEndBefore(cursorNode)
+      selection.removeAllRanges()
+      selection.addRange(range)
+    }
 
     // Syntax highlighting
   })
