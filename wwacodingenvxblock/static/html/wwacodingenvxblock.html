@@ -1,33 +1,41 @@
 <div class="wwacodingenvxblock_block">
-  <!-- <p class="demo">
-    CodingAreaXBlock: count is now
-    <span class="count">{self.count}</span> (click me to increment).
-  </p> -->
-  <div id="container">
-    <pre id="lines">1</pre>
-    <div id="thecodingarea" contenteditable>
-      <div>using System;</div>
-      <div><br></div>
-      <div>public class HelloWorld</div>
-      <div>&#123;</div>
-      <div>&nbsp;&nbsp;&nbsp;&nbsp;public static void Main(string[] args)</div>
-      <div>&nbsp;&nbsp;&nbsp;&nbsp;&#123;</div>
-      <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Console.WriteLine("Hallo, Wien West Akademie!");</div>
-      <div>&nbsp;&nbsp;&nbsp;&nbsp;&#125;</div>
-      <div>&#125;<br></div>
-    </div>
+  <link href="https://cdn.jsdelivr.net/npm/ace-builds@1.33.1/css/ace.min.css" rel="stylesheet" />
+  <div class="container">
+    <div id="editor"> some text </div>
+    <table class="output-area" cellspacing="0">
+      <tr>
+        <td class="center">
+          <button class="button-run"><span>Ausf&uuml;hren</span></button>
+          <svg class="spinner hidden">
+            <circle>
+              <animateTransform attributeName="transform" type="rotate" values="-90;810" keyTimes="0;1" dur="2s" repeatCount="indefinite"></animateTransform>
+              <animate attributeName="stroke-dashoffset" values="0%;0%;-157.080%" calcMode="spline" keySplines="0.61, 1, 0.88, 1; 0.12, 0, 0.39, 0" keyTimes="0;0.5;1" dur="2s" repeatCount="indefinite"></animate>
+              <animate attributeName="stroke-dasharray" values="0% 314.159%;157.080% 157.080%;0% 314.159%" calcMode="spline" keySplines="0.61, 1, 0.88, 1; 0.12, 0, 0.39, 0" keyTimes="0;0.5;1" dur="2s" repeatCount="indefinite"></animate>
+            </circle>
+          </svg>
+        </td>
+        <td>
+          <i>Exit Code:</i><br>
+          <span class="monospace exitCode"></span>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <i>Ausgabe:</i><br>
+          <span class="monospace output"></span>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <i>Fehler:</i><br>
+          <span class="monospace error"></span>
+        </td>
+      </tr>
+    </table>
   </div>
-  <button class="button-run">Run</button>
-  <p>
-    <b>Output:</b><br />
-    <span class="output"></span>
-  </p>
-  <p>
-    <b>Error:</b><br />
-    <span class="error"></span>
-  </p>
-  <p>
-    <b>Exit Code:</b><br />
-    <span class="exitCode"></span>
-  </p>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.33.1/ace.js"
+    integrity="sha512-WN1CEDE9Js0mEqvtRrNS7GHS+arRJxWVO03zttkQQXEQjwGVcHQ2kMja415m0bNeB3AtYsyjUWJ1BS4wGLta/Q=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdn.jsdelivr.net/npm/ace-builds@1.33.1/src-min-noconflict/theme-chrome.min.js"></script>
+  <script></script>
 </div>

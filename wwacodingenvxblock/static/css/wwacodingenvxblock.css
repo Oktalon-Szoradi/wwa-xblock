@@ -7,86 +7,165 @@
   cursor: pointer;
 }
 
-#container {
-  display: flex;
-  margin: 16px;
+.container {
+  box-shadow: inset 0 0 0 1px hsla(0, 0%, 0%, 0.4), inset 0 0 0 2px hsla(0, 0%, 100%, 0.25);
+  display: inline-block;
+  margin: 8px;
+  padding: 8px;
+  background-color: #282828;
   border: none;
   border-radius: 4px;
-  box-shadow: inset 0 0 0 1px hsla(0, 0%, 0%, 0.4),
-    inset 0 0 0 2px hsla(0, 0%, 100%, 0.25);
-  background-color: #222;
-  padding: 8px;
-  line-height: 1.5;
   color: white;
-  font-family: monospace;
 }
 
-#container:focus-within {
-  outline: none;
-  box-shadow: inset 0 0 0 1px hsla(0, 0%, 0%, 0.4),
-    inset 0 0 0 2px hsla(0, 0%, 100%, 0.25), 0 0 4px 1px hsl(200, 100%, 50%);
+.container:focus-within {
+  box-shadow: inset 0 0 0 1px hsla(0, 0%, 0%, 0.4), inset 0 0 0 2px hsla(0, 0%, 100%, 0.25), 0 0 4px 1px hsl(200, 100%, 50%);
 }
 
-#thecodingarea {
-  width: 100%;
-  margin-left: 1em;
+#editor {
+  position: relative;
+  width: 1024px;
+  height: 360px;
 }
 
-#thecodingarea:focus-visible {
-  outline: none;
+.output-area {
+  width: 1024px;
+  margin-top: 8px;
+  background-color: black;
 }
 
-#lines {
-  user-select: none;
-  width: 32px;
-  margin: 0;
-  padding: 0 1em 0 0;
-  opacity: 0.75;
-  text-align: right;
-  border-right: 1px solid hsla(0, 0%, 100%, 0.25);
+.no-padding {
+  padding: 0;
 }
 
-span.keyword {
-  color: #569cd6;
+.output-area tr td {
+  box-shadow: inset 0 0 4px 2px hsla(0, 0%, 0%, 0.25);
+  padding: 1em;
+  background-color: hsl(0, 0%, 20%);
+}
+
+.output-area tr td i {
+  opacity: 0.1;
+  font-size: 1.2em;
+  text-transform: uppercase;
+  text-shadow: 2px 2px 4px black;
+  letter-spacing: 0.25em;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
 
 .button-run {
+  box-shadow: inset 0 0 0 1px hsla(0, 0%, 0%, 0.4), inset 0 0 0 2px hsla(0, 0%, 100%, 0.25);
   margin: 8px;
+  padding: 0.5em 3em;
+  background: linear-gradient(to bottom, hsl(120, 100%, 45%), hsl(120, 100%, 25%), hsl(120, 100%, 30%));
+  cursor: pointer;
   border: none;
   border-radius: 4px;
-  box-shadow: inset 0 0 0 1px hsla(0, 0%, 0%, 0.4),
-    inset 0 0 0 2px hsla(0, 0%, 100%, 0.25);
-  background: linear-gradient(to bottom,
-      hsl(120, 100%, 45%),
-      hsl(120, 100%, 25%),
-      hsl(120, 100%, 30%));
-  cursor: pointer;
-  padding: 8px 16px;
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
   text-align: center;
   text-decoration: none;
   text-shadow: 0 1px 1px hsla(0, 0%, 0%, 0.25);
-  color: white;
-  font-size: 16px;
-  font-weight: bold;
 }
 
 .button-run:hover {
-  box-shadow: inset 0 0 0 1px hsla(0, 0%, 0%, 0.4),
-    inset 0 0 0 2px hsla(0, 0%, 100%, 0.25), 0 0 4px 1px hsl(120, 100%, 50%);
-  background: linear-gradient(to bottom,
-      hsl(120, 100%, 55%),
-      hsl(120, 100%, 35%),
-      hsl(120, 100%, 40%));
+  box-shadow: inset 0 0 0 1px hsla(0, 0%, 0%, 0.4), inset 0 0 0 2px hsla(0, 0%, 100%, 0.25), 0 0 12px 1px hsla(120, 100%, 50%, 0.5);
+  background: linear-gradient(to bottom, hsl(120, 100%, 55%), hsl(120, 100%, 35%), hsl(120, 100%, 40%));
 }
 
 .button-run:active {
-  background: linear-gradient(to bottom,
-      hsl(120, 100%, 35%),
-      hsl(120, 100%, 15%),
-      hsl(120, 100%, 20%));
+  box-shadow: inset 0 0 0 1px hsla(0, 0%, 0%, 0.4), inset 0 0 0 2px hsla(0, 0%, 100%, 0.25), 0 0 12px 1px hsla(120, 100%, 50%, 0.1);
+  background: linear-gradient(to bottom, hsl(120, 100%, 35%), hsl(120, 100%, 15%), hsl(120, 100%, 20%));
+}
+
+.button-run:active>span {
+  opacity: 0.5;
+}
+
+.button-run:focus {
+  outline: none;
+}
+
+.button-run:disabled {
+  background: linear-gradient(to bottom, hsl(0, 0%, 45%), hsl(0, 0%, 25%), hsl(0, 0%, 30%));
+  cursor: not-allowed;
+}
+
+.button-run:disabled:hover {
+  box-shadow: inset 0 0 0 1px hsla(0, 0%, 0%, 0.4), inset 0 0 0 2px hsla(0, 0%, 100%, 0.25);
+}
+
+.button-run:disabled:active {
+  box-shadow: inset 0 0 0 1px hsla(0, 0%, 0%, 0.4), inset 0 0 0 2px hsla(0, 0%, 100%, 0.25);
+}
+
+.button-run:disabled>span {
+  opacity: 0.5;
+}
+
+.spinner {
+  box-sizing: border-box;
+  width: 32px;
+  height: 32px;
+  padding: 0 8px;
+  overflow: visible;
+}
+
+.hidden {
+  /* display: none; */
+  opacity: 0;
+}
+
+.spinner>circle {
+  fill: none;
+  stroke: currentColor;
+  cx: 50%;
+  cy: 50%;
+  r: 50%;
+  stroke-width: 4px;
+  stroke-linecap: round;
+  transform-origin: center;
+}
+
+.monospace {
+  font-family: monospace;
 }
 
 .error {
   color: red !important;
-  font-family: monospace;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-out {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+.fade-in {
+  animation: fade-in 0.5s;
+}
+
+.fade-out {
+  animation: fade-out 0.5s;
 }
